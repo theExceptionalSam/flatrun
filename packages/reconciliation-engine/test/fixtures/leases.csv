@@ -1,0 +1,7 @@
+lease_id,tenant_id,start_date,end_date,rent_amount,currency,frequency,escalation
+LEASE-001,TEN-001,2025-01-01,2025-06-30,500000,NGN,monthly,none
+LEASE-002,TEN-002,2025-01-01,2025-06-30,500000,NGN,monthly,none
+LEASE-003,TEN-003,2025-01-01,2025-06-30,500000,NGN,monthly,percentage:0.05:12:2025-06-01
+LEASE-004,TEN-004,2025-01-01,2025-06-30,500000,NGN,monthly,none
+LEASE-005,TEN-005,2025-01-01,2025-06-30,500000,NGN,monthly,none
+LEASE-006,TEN-006,2025-01-01,2025-06-30,500000,NGN,monthly,none

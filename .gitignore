@@ -46,9 +46,37 @@ local-*
 *.log
 dev.log
 dev.out.log
-test
+/test/
 prompt
 
 server.log
 # Skills directory
 /skills/
+# Sandbox artifacts (not part of the product)
+/upload/
+/download/
+/.zscripts/dev.pid
+/.zscripts/dev.log
+/skills/
+/test/
+/prompt
+/examples/
+/mini-services/
+/db/
+/.z-ai-config
+/.claude
+
+# Local env files
+.env
+.env.local
+.env.*.local
+
+# OS files
+.Danling
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo

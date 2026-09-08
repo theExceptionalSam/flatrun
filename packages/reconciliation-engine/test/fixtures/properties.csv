@@ -1,0 +1,7 @@
+property_id,property_name,address,property_type
+PROP-001,Victoria Island Tower,"1 Akin Adesola St, Lagos",commercial
+PROP-002,Ikoyi Plaza,"2 Bourdillon Rd, Lagos",commercial
+PROP-003,Abuja Gateway,"3 Aso Dr, Abuja",commercial
+PROP-004,Port Harcourt Mall,"4 Aba Rd, Port Harcourt",commercial
+PROP-005,Lekki Phase 1,"5 Admiralty Way, Lagos",commercial
+PROP-006,Yaba Tech Hub,"6 Herbert Macaulay Way, Lagos",commercial

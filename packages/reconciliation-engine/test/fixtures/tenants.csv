@@ -1,0 +1,7 @@
+tenant_id,tenant_name,property_id
+TEN-001,Tenant A — Clean Ltd,PROP-001
+TEN-002,Tenant B — Underbilling Plc,PROP-002
+TEN-003,Tenant C — Missed Escalation Ltd,PROP-003
+TEN-004,Tenant D — Underpayment Ltd,PROP-004
+TEN-005,Tenant E — Unallocated Payment Ltd,PROP-005
+TEN-006,Tenant F — Duplicate Invoice Ltd,PROP-006
