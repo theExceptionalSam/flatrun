@@ -1,0 +1,1950 @@
+Yes. We should now **freeze the product definition** enough that a designer and engineer could start building without guessing.
+
+One important correction from the broader vision:
+
+> **The Real Estate Execution OS is the company vision. It is NOT the MVP.**
+
+For the MVP, I would enter through one extremely specific problem:
+
+# REAL ESTATE REVENUE CONTROL
+
+**The MVP finds discrepancies between what a property portfolio is contractually/billing-wise supposed to earn and what the company actually billed, collected and recorded.**
+
+This is a much sharper starting point than trying to automate every real-estate workflow.
+
+The larger opportunity is credible: CRE companies are actively investing in AI process automation, while data fragmentation remains a major obstacle; Deloitte found only 14% of surveyed firms believed they had well-structured data-management processes and robust privacy policies. ([Deloitte United Kingdom][1]) Meanwhile, incumbent platforms such as Yardi already cover broad property-management functions, accounting, procurement, maintenance and AI. ([Yardi][2]) So **we should not build another property-management system**. We should build the intelligence/control layer that detects what those systems miss.
+
+---
+
+# 1. DEFINE THE PROBLEM
+
+## The problem
+
+Real-estate companies have multiple sources of financial truth:
+
+* leases
+* rent schedules
+* invoices
+* property-management systems
+* accounting systems
+* bank/payment records
+* spreadsheets
+* service-charge records
+* tenant records
+* manually entered adjustments
+
+These systems often don't agree perfectly.
+
+The finance team therefore has to manually answer:
+
+> **"What should we have collected, what did we actually collect, what did we record, and where is the difference?"**
+
+Today this can require exporting spreadsheets, comparing records, checking leases, matching payments, investigating exceptions and contacting property managers.
+
+The dangerous part isn't simply that this takes time.
+
+It means **money can disappear inside operational complexity without anyone immediately knowing why.**
+
+---
+
+# 2. WHAT EXACTLY ARE WE SOLVING?
+
+The product solves:
+
+> **Automated revenue reconciliation and leakage detection for real-estate portfolios.**
+
+In simple terms:
+
+```text
+WHAT SHOULD HAPPEN?
+        ↓
+LEASE / BILLING DATA
+        ↓
+WHAT ACTUALLY HAPPENED?
+        ↓
+PAYMENT / ACCOUNTING DATA
+        ↓
+COMPARE
+        ↓
+FIND THE DIFFERENCE
+        ↓
+EXPLAIN THE DIFFERENCE
+        ↓
+CREATE ACTION
+        ↓
+TRACK RESOLUTION
+```
+
+### Example
+
+The system discovers:
+
+> Tenant A's lease says ₦2,000,000/month.
+
+But:
+
+* January billed: ₦2m
+* February billed: ₦2m
+* March billed: ₦1.6m
+
+The system identifies:
+
+**₦400,000 billing variance.**
+
+Then investigates:
+
+> Lease requires a 10% escalation from March.
+
+Expected:
+
+**₦2.2m**
+
+Actual:
+
+**₦1.6m**
+
+Potential monthly leakage:
+
+**₦600,000**
+
+Now the product has gone beyond reporting.
+
+It has found a problem that deserves action.
+
+---
+
+# 3. WHY IT MATTERS
+
+There are four reasons this is strategically important.
+
+## 1. Money
+
+You are dealing directly with revenue.
+
+That creates a much stronger buying argument than:
+
+> "This will save your property managers some time."
+
+Instead:
+
+> "This identifies financial discrepancies across your portfolio."
+
+---
+
+## 2. Control
+
+Large portfolios become difficult to manually inspect.
+
+The more properties, tenants and transactions a company has, the more difficult manual reconciliation becomes.
+
+The product becomes a **continuous control mechanism**.
+
+---
+
+## 3. Scale
+
+Human teams scale linearly.
+
+A company acquiring another 5,000 properties shouldn't necessarily need another 20 people just to compare spreadsheets.
+
+Software should absorb the additional complexity.
+
+---
+
+## 4. Foundation for the larger OS
+
+Once you understand:
+
+**property → lease → obligation → billing → payment → accounting → exception**
+
+you have the beginning of the Real Estate Graph.
+
+From there you can expand into:
+
+* lease intelligence
+* transaction workflows
+* maintenance
+* compliance
+* vendor management
+* portfolio intelligence
+
+---
+
+# 4. THE OUTCOME WE WANT
+
+Don't define success as:
+
+> "Users can upload files."
+
+That's a feature.
+
+Define success as:
+
+> **A real-estate finance team can upload/connect its portfolio data and automatically discover, understand and resolve revenue discrepancies without manually reconciling every property.**
+
+### The ideal outcome:
+
+The user opens the application and sees:
+
+> **₦18.4m potential revenue discrepancies detected**
+
+Then:
+
+| Issue                    | Amount | Properties | Status        |
+| ------------------------ | -----: | ---------: | ------------- |
+| Missed rent escalation   |  ₦6.2m |         17 | Open          |
+| Underbilling             |  ₦4.8m |         23 | Investigating |
+| Unallocated payments     |  ₦3.1m |         41 | Open          |
+| Partial payments         |  ₦2.4m |         29 | Open          |
+| Billing/payment mismatch |  ₦1.9m |         12 | Resolved      |
+
+The user clicks an issue and gets:
+
+**what happened → why → evidence → responsible party → recommended action → resolution status.**
+
+That's the product.
+
+---
+
+# 5. DEFINE THE USER
+
+Do **not** initially say:
+
+> "Real estate companies."
+
+That's too broad.
+
+## Primary customer
+
+**Property management companies / real-estate operators managing a substantial portfolio of income-producing properties.**
+
+For MVP:
+
+### Ideal customer profile
+
+* 500–10,000+ units/properties
+* dedicated finance/property accounting team
+* recurring rent/service-charge revenue
+* multiple data sources
+* existing accounting/property-management software
+* meaningful manual reconciliation workload
+
+---
+
+# 6. PRIMARY USER
+
+## Property Finance Manager / Property Accountant
+
+This person is responsible for:
+
+* rent billing
+* payment reconciliation
+* tenant balances
+* arrears
+* revenue reporting
+* accounting accuracy
+* investigating discrepancies
+
+### Their current reality
+
+They receive:
+
+**Lease data**
+
+*
+
+**billing data**
+
+*
+
+**payment data**
+
+*
+
+**accounting data**
+
+and have to determine:
+
+> "Does everything match?"
+
+---
+
+# 7. SECONDARY USERS
+
+### Head of Finance / CFO
+
+Wants:
+
+> "Where are we losing money?"
+
+### Property Manager
+
+Wants:
+
+> "Which tenants/properties have issues requiring action?"
+
+### Finance Analyst
+
+Wants:
+
+> "Give me the exceptions and evidence so I don't manually search thousands of records."
+
+### Executive
+
+Eventually wants:
+
+> "Give me the financial health of the portfolio and tell me what requires my attention."
+
+---
+
+# 8. WHAT THE USER IS TRYING TO ACCOMPLISH
+
+The primary user isn't trying to "use AI."
+
+They are trying to:
+
+### Before
+
+> Reconcile the portfolio accurately.
+
+### After
+
+> Know what doesn't match, why it doesn't match, how much it matters and what to do about it.
+
+That's the job-to-be-done.
+
+---
+
+# 9. DEFINE THE MVP
+
+Now we get ruthless.
+
+## MUST HAVE
+
+### 1. Account creation
+
+* signup
+* login
+* organisation
+* user profile
+* role
+
+---
+
+### 2. Portfolio creation
+
+User creates:
+
+> "ABC Properties"
+
+Then defines:
+
+* currency
+* property types
+* reporting period
+* basic organisation information
+
+---
+
+### 3. Data ingestion
+
+MVP should support **CSV/XLSX upload first**.
+
+Don't begin by spending six months integrating Yardi.
+
+Allow:
+
+### Upload
+
+**Properties**
+
+```text
+property_id
+property_name
+address
+property_type
+```
+
+**Tenants**
+
+```text
+tenant_id
+property_id
+tenant_name
+lease_id
+```
+
+**Lease obligations**
+
+```text
+lease_id
+tenant_id
+start_date
+end_date
+rent_amount
+currency
+escalation
+frequency
+```
+
+**Billing**
+
+```text
+invoice_id
+tenant_id
+date
+amount
+type
+```
+
+**Payments**
+
+```text
+payment_id
+tenant_id
+date
+amount
+reference
+```
+
+---
+
+# 10. DATA MAPPING
+
+The biggest MVP challenge isn't AI.
+
+It's:
+
+> **making ugly enterprise data understandable.**
+
+Therefore the product needs:
+
+```text
+UPLOAD
+   ↓
+DETECT COLUMNS
+   ↓
+MAP COLUMNS
+   ↓
+VALIDATE
+   ↓
+PREVIEW
+   ↓
+IMPORT
+```
+
+Example:
+
+User uploads:
+
+`tenant_master_final_v7.xlsx`
+
+The application detects:
+
+| File column   | System field |
+| ------------- | ------------ |
+| Client Name   | Tenant Name  |
+| Unit          | Property     |
+| Agreement No. | Lease ID     |
+| Monthly Fee   | Rent Amount  |
+
+User confirms.
+
+---
+
+# 11. RECONCILIATION ENGINE
+
+This is the actual product.
+
+The engine compares:
+
+### Expected
+
+from:
+
+* lease
+* billing schedule
+* contractual obligations
+
+against:
+
+### Actual
+
+from:
+
+* invoices
+* payments
+* accounting records
+
+Then categorises differences.
+
+---
+
+# 12. MVP EXCEPTION TYPES
+
+Don't try to detect everything.
+
+Start with perhaps **six**.
+
+### 1. Underbilling
+
+Expected > billed.
+
+### 2. Missing billing
+
+Expected billing exists but no invoice.
+
+### 3. Underpayment
+
+Invoice > payment.
+
+### 4. Unallocated payment
+
+Payment exists but cannot confidently be matched.
+
+### 5. Missed escalation
+
+Lease indicates increased rent but billing didn't change.
+
+### 6. Duplicate/anomalous billing
+
+Potential duplicate or suspicious transaction.
+
+That's enough to prove the core thesis.
+
+---
+
+# 13. EVIDENCE ENGINE
+
+Every exception needs evidence.
+
+Never tell the user:
+
+> "AI thinks there may be leakage."
+
+Instead:
+
+### Exception
+
+**Missed rent escalation**
+
+### Tenant
+
+XYZ Ltd
+
+### Property
+
+Victoria Office 14
+
+### Lease
+
+LEASE-1029
+
+### Contractual rent
+
+₦2,000,000
+
+### Escalation
+
+10%
+
+### Effective date
+
+1 March 2026
+
+### Expected
+
+₦2,200,000
+
+### Actual
+
+₦2,000,000
+
+### Variance
+
+**₦200,000/month**
+
+### Evidence
+
+* Lease clause
+* Billing records
+* Previous invoices
+
+### Confidence
+
+**High**
+
+That makes the system auditable.
+
+---
+
+# 14. ACTIONS
+
+An exception without action becomes another dashboard.
+
+So each exception needs:
+
+**Assign**
+
+**Comment**
+
+**Request review**
+
+**Mark resolved**
+
+**Dismiss**
+
+**Escalate**
+
+**Export evidence**
+
+Eventually:
+
+**Automate action.**
+
+But not in MVP.
+
+---
+
+# 15. MVP DASHBOARD
+
+The homepage should answer four questions.
+
+```text
+┌──────────────────────────────────────────────┐
+│ Revenue Control                              │
+│ ABC Properties                               │
+├──────────────────────────────────────────────┤
+│                                              │
+│ POTENTIAL DISCREPANCIES                      │
+│ ₦18.4m                                       │
+│                                              │
+│ 147 Exceptions                               │
+│                                              │
+├────────────┬────────────┬────────────────────┤
+│ Underbill  │ Missing    │ Unallocated        │
+│ ₦6.2m      │ ₦4.8m      │ ₦3.1m              │
+├────────────┴────────────┴────────────────────┤
+│                                              │
+│ TOP ISSUES                                   │
+│                                              │
+│ 🔴 Tenant A       ₦600k    Missed escalation │
+│ 🔴 Tenant B       ₦420k    Underbilling      │
+│ 🟠 Tenant C       ₦310k    Unallocated pay.  │
+│ 🟡 Tenant D       ₦190k    Partial payment   │
+│                                              │
+└──────────────────────────────────────────────┘
+```
+
+The dashboard is not the product.
+
+**The exception resolution engine is the product.**
+
+---
+
+# 16. SCREEN PLAN
+
+Here is the actual MVP information architecture.
+
+```text
+LOGIN
+  │
+  ▼
+ONBOARDING
+  │
+  ▼
+ORGANISATION
+  │
+  ▼
+IMPORT DATA
+  │
+  ▼
+DATA VALIDATION
+  │
+  ▼
+RECONCILIATION
+  │
+  ▼
+DASHBOARD
+  │
+  ├──────────────┐
+  ▼              ▼
+EXCEPTIONS     PROPERTIES
+  │
+  ▼
+EXCEPTION DETAIL
+  │
+  ├── Evidence
+  ├── Explanation
+  ├── History
+  └── Action
+       │
+       ▼
+     RESOLVE
+```
+
+---
+
+# 17. SCREEN 1 — LOGIN
+
+```text
+┌─────────────────────────────┐
+│                             │
+│       REAL ESTATE           │
+│       REVENUE CONTROL       │
+│                             │
+│ Email                       │
+│ [____________________]      │
+│                             │
+│ Password                    │
+│ [____________________]      │
+│                             │
+│ [ Sign in ]                 │
+│                             │
+│ Forgot password?            │
+│                             │
+│ Don't have an account?      │
+│ Create account              │
+└─────────────────────────────┘
+```
+
+---
+
+# 18. SCREEN 2 — ONBOARDING
+
+```text
+Welcome to Revenue Control
+
+Let's connect your portfolio.
+
+Organisation name
+[ ABC Properties             ]
+
+Portfolio size
+[ 1,000–5,000 properties    ]
+
+Primary currency
+[ NGN ▼ ]
+
+[ Continue ]
+```
+
+Don't make onboarding 15 steps.
+
+Get them to value quickly.
+
+---
+
+# 19. SCREEN 3 — DATA IMPORT
+
+```text
+Connect your portfolio
+
+STEP 1 ─ Properties
+STEP 2 ─ Tenants
+STEP 3 ─ Leases
+STEP 4 ─ Billing
+STEP 5 ─ Payments
+
+────────────────────────
+
+Upload Properties
+
+[ Drop CSV/XLSX here ]
+
+or
+
+[ Choose file ]
+
+────────────────────────
+
+✓ CSV
+✓ XLSX
+
+[ Continue ]
+```
+
+---
+
+# 20. SCREEN 4 — DATA MAPPING
+
+```text
+Map your data
+
+Your file                  Revenue Control
+
+Client Name      ───────→  Tenant Name       ✓
+Agreement No.    ───────→  Lease ID          ✓
+Monthly Fee      ───────→  Rent Amount       ✓
+Start            ───────→  Lease Start       ✓
+End              ───────→  Lease End         ✓
+
+Rows detected: 4,281
+
+[ Validate data ]
+```
+
+---
+
+# 21. SCREEN 5 — VALIDATION
+
+```text
+Data validation
+
+✓ 4,281 tenants
+✓ 4,281 leases
+✓ 12,492 invoices
+✓ 11,940 payments
+
+⚠ 31 leases missing rent amount
+⚠ 18 tenants have duplicate IDs
+⚠ 7 payments cannot be matched
+
+[ Fix issues ]
+
+[ Continue with valid records ]
+```
+
+Important:
+
+**Don't silently reject bad data.**
+
+Tell the user exactly what is wrong.
+
+---
+
+# 22. SCREEN 6 — RECONCILIATION
+
+```text
+Reconciliation
+
+Analysing:
+
+4,281 tenants
+12,492 invoices
+11,940 payments
+
+████████████████░░░░ 82%
+
+Checking:
+
+✓ Billing
+✓ Payments
+✓ Lease obligations
+→ Escalations
+→ Exceptions
+
+Estimated time: < 2 minutes
+```
+
+---
+
+# 23. SCREEN 7 — DASHBOARD
+
+This becomes the user's home.
+
+```text
+Revenue Control
+ABC Properties
+
+September 2026
+
+Potential discrepancies
+₦18,420,000
+
+147 exceptions
+32 high priority
+71 medium
+44 low
+
+────────────────────────────
+
+Revenue at risk
+
+₦18.4m
+
+Underbilling       ₦6.2m
+Missing billing    ₦4.8m
+Unallocated        ₦3.1m
+Underpayments      ₦2.4m
+Other              ₦1.9m
+
+────────────────────────────
+
+[ View all exceptions ]
+```
+
+---
+
+# 24. SCREEN 8 — EXCEPTIONS
+
+Filters:
+
+```text
+All
+Underbilling
+Missing billing
+Underpayment
+Unallocated
+Escalation
+Duplicate
+```
+
+Then:
+
+```text
+┌──────────────────────────────────────────┐
+│ 🔴 Missed rent escalation                │
+│ Tenant: XYZ Ltd                          │
+│ Property: Victoria Office 14             │
+│ Variance: ₦600,000                       │
+│ Confidence: High                         │
+│ Status: Open                             │
+│                                          │
+│ [ Investigate ]                          │
+└──────────────────────────────────────────┘
+```
+
+---
+
+# 25. SCREEN 9 — EXCEPTION DETAIL
+
+This is arguably the **most important screen in the MVP**.
+
+```text
+Missed Rent Escalation
+
+₦600,000 potential variance
+
+Tenant
+XYZ Ltd
+
+Property
+Victoria Office 14
+
+Lease
+LEASE-1029
+
+────────────────────────────
+
+EXPECTED
+
+Base rent       ₦2,000,000
+Escalation      10%
+Expected        ₦2,200,000
+
+ACTUAL
+
+Billed          ₦2,000,000
+
+VARIANCE
+
+₦200,000/month
+
+────────────────────────────
+
+WHY WE FLAGGED THIS
+
+Lease indicates a 10% escalation
+effective 01 Mar 2026.
+
+Billing remained unchanged.
+
+────────────────────────────
+
+EVIDENCE
+
+[ View lease ]
+[ View invoice ]
+[ View billing history ]
+
+────────────────────────────
+
+ACTION
+
+[ Assign ]
+[ Mark resolved ]
+[ Dismiss ]
+```
+
+This is where trust is won.
+
+---
+
+# 26. SCREEN 10 — RESOLUTION
+
+```text
+Resolve exception
+
+Resolution:
+
+○ Correct billing
+○ Accounting adjustment
+○ Tenant dispute
+○ Data error
+○ False positive
+○ Other
+
+Notes
+
+[________________________]
+
+Attach evidence
+
+[ Upload ]
+
+[ Resolve exception ]
+```
+
+Now the system learns the outcome.
+
+---
+
+# 27. SCREEN 11 — DATA SOURCES
+
+Later this becomes:
+
+```text
+Data Sources
+
+Properties
+✓ Connected
+
+Leases
+✓ Connected
+
+Billing
+✓ Connected
+
+Payments
+✓ Connected
+
+Accounting
+○ Not connected
+
+Last synchronised:
+Today, 10:42 AM
+
+[ Add data source ]
+```
+
+---
+
+# 28. USER FLOW
+
+The core journey should be brutally simple:
+
+```text
+DISCOVER
+   ↓
+SIGN UP
+   ↓
+CREATE ORGANISATION
+   ↓
+UPLOAD DATA
+   ↓
+MAP DATA
+   ↓
+VALIDATE
+   ↓
+RUN RECONCILIATION
+   ↓
+SEE MONEY AT RISK
+   ↓
+OPEN EXCEPTION
+   ↓
+UNDERSTAND WHY
+   ↓
+REVIEW EVIDENCE
+   ↓
+TAKE ACTION
+   ↓
+RESOLVE
+   ↓
+TRACK RECOVERY
+```
+
+The **aha moment** should happen here:
+
+> **"The system found money/problems I would otherwise have had to manually discover."**
+
+That is the activation event.
+
+---
+
+# 29. WHAT DOES NOT BELONG IN MVP
+
+This is important.
+
+### NOT YET:
+
+❌ Maintenance management
+❌ Tenant portal
+❌ Property listings
+❌ CRM
+❌ AI chatbot
+❌ Vendor marketplace
+❌ Automated payments
+❌ Full accounting system
+❌ Full PMS
+❌ Property valuation
+❌ Transaction management
+❌ Mobile app
+❌ Autonomous AI agents
+❌ WhatsApp bot
+❌ Predictive maintenance
+❌ Portfolio forecasting
+❌ Native Yardi integration
+❌ 50 dashboards
+
+All of these can come later.
+
+---
+
+# 30. WHAT CAN COME NEXT
+
+### V1
+
+Revenue reconciliation.
+
+### V2
+
+Direct accounting integrations.
+
+### V3
+
+Lease intelligence.
+
+### V4
+
+Automated recovery workflows.
+
+### V5
+
+Transaction/compliance automation.
+
+### V6
+
+Maintenance/vendor execution.
+
+### V7
+
+Full Real Estate Execution OS.
+
+---
+
+# 31. TECHNICAL ARCHITECTURE
+
+I'd build the MVP as a modern web application.
+
+```text
+                    USER
+                     │
+                     ▼
+              NEXT.JS WEB APP
+                     │
+                     ▼
+               API / BACKEND
+                     │
+       ┌─────────────┼─────────────┐
+       ▼             ▼             ▼
+   DATABASE       WORKFLOW       AI LAYER
+   POSTGRES       ENGINE         SERVICES
+       │             │             │
+       └─────────────┼─────────────┘
+                     ▼
+              DATA PROCESSING
+                     │
+          ┌──────────┼──────────┐
+          ▼          ▼          ▼
+        CSV/XLSX   PDF/DOC    APIs
+```
+
+---
+
+# 32. RECOMMENDED STACK
+
+## Frontend
+
+**Next.js + TypeScript**
+
+Why:
+
+* mature
+* fast
+* strong ecosystem
+* server/client flexibility
+* excellent for enterprise SaaS
+* easy deployment
+
+UI:
+
+**Tailwind CSS + shadcn/ui**
+
+---
+
+# 33. Backend
+
+For MVP:
+
+**TypeScript backend**
+
+Either:
+
+### Option A
+
+Next.js API routes/server actions.
+
+or
+
+### Option B
+
+**NestJS**
+
+I would choose **NestJS** if we know this is intended to become a serious enterprise backend.
+
+Why?
+
+Because eventually you will have:
+
+* workflow engines
+* integrations
+* background jobs
+* permissions
+* audit events
+* webhooks
+* AI jobs
+* data pipelines
+
+A structured backend becomes valuable.
+
+---
+
+# 34. DATABASE
+
+### PostgreSQL
+
+This is the core database.
+
+Main tables:
+
+```text
+organisations
+users
+roles
+properties
+units
+tenants
+leases
+lease_obligations
+invoices
+payments
+reconciliations
+exceptions
+exception_evidence
+actions
+comments
+data_sources
+imports
+import_rows
+audit_logs
+```
+
+---
+
+# 35. IMPORTANT DATABASE RELATIONSHIP
+
+The central relationship:
+
+```text
+Organisation
+   │
+   ├── Property
+   │      │
+   │      └── Unit
+   │
+   ├── Tenant
+   │      │
+   │      └── Lease
+   │             │
+   │             └── Obligations
+   │
+   ├── Invoice
+   │
+   ├── Payment
+   │
+   └── Exception
+```
+
+Every exception should be traceable back to its underlying records.
+
+---
+
+# 36. FILE STORAGE
+
+Use object storage for:
+
+* leases
+* invoices
+* supporting documents
+* uploaded spreadsheets
+* evidence
+
+Something like:
+
+**AWS S3**
+
+or an S3-compatible service.
+
+Database stores metadata.
+
+Object storage stores actual files.
+
+---
+
+# 37. AUTHENTICATION
+
+For MVP:
+
+**WorkOS AuthKit / Auth0 / Clerk** are reasonable choices.
+
+For enterprise trajectory, I'd favour an architecture that supports:
+
+* SSO
+* SAML
+* OAuth
+* MFA
+* role-based access
+* organisation-level access
+* SCIM later
+
+Enterprise customers will eventually expect this.
+
+---
+
+# 38. AUTHORISATION
+
+You need RBAC from day one.
+
+Example:
+
+### Admin
+
+Everything.
+
+### Finance Manager
+
+Financial data + exceptions.
+
+### Property Manager
+
+Properties + relevant exceptions.
+
+### Analyst
+
+Read + investigate.
+
+### Executive
+
+Portfolio-level reporting.
+
+Never simply have:
+
+```text
+if user.loggedIn:
+    show everything
+```
+
+That's unacceptable for enterprise software.
+
+---
+
+# 39. WORKFLOW ENGINE
+
+Don't make complex workflows entirely dependent on API requests.
+
+Eventually use something like:
+
+**Temporal**
+
+for durable workflows.
+
+For MVP, simpler background jobs can work.
+
+But the architecture should anticipate:
+
+```text
+IMPORT
+ ↓
+PROCESS
+ ↓
+RECONCILE
+ ↓
+GENERATE EXCEPTIONS
+ ↓
+NOTIFY
+ ↓
+WAIT FOR ACTION
+ ↓
+RESOLVE
+```
+
+Some of these processes may take minutes, hours or days.
+
+---
+
+# 40. AI LAYER
+
+Important distinction:
+
+### Deterministic calculations
+
+Should NOT depend on AI.
+
+For example:
+
+```text
+Expected rent = 2,000,000 × 1.10
+```
+
+That's software logic.
+
+Not an LLM.
+
+AI is useful for:
+
+* extracting lease terms
+* interpreting clauses
+* classifying documents
+* explaining discrepancies
+* matching ambiguous records
+* summarising evidence
+* identifying unusual patterns
+
+### Principle:
+
+> **Use deterministic software for truth. Use AI for interpretation.**
+
+That is extremely important in financial software.
+
+---
+
+# 41. INTEGRATIONS
+
+### MVP
+
+Start with:
+
+**CSV/XLSX**
+
+because this proves the workflow without spending months on integrations.
+
+Then:
+
+### Phase 2
+
+* accounting APIs
+* property management APIs
+* bank/payment feeds
+
+Then:
+
+### Enterprise
+
+* Yardi
+* MRI
+* SAP
+* Oracle
+* Salesforce
+* proprietary systems
+
+Yardi already positions itself as a broad connected platform spanning property management, accounting, procurement, maintenance and AI, which reinforces why our product should integrate rather than attempt to replace the entire stack. ([Yardi][2])
+
+---
+
+# 42. API DESIGN
+
+Eventually:
+
+```text
+POST /organisations
+
+POST /properties/import
+
+POST /leases/import
+
+POST /billing/import
+
+POST /payments/import
+
+POST /reconciliation/run
+
+GET /reconciliation/:id
+
+GET /exceptions
+
+GET /exceptions/:id
+
+PATCH /exceptions/:id
+
+POST /exceptions/:id/actions
+
+GET /portfolio/summary
+```
+
+Later:
+
+```text
+POST /webhooks/yardi
+
+POST /webhooks/accounting
+
+POST /webhooks/payment
+
+GET /integrations
+```
+
+---
+
+# 43. EDGE CASES
+
+This is where amateur products die.
+
+## No data
+
+User signs up but hasn't uploaded anything.
+
+Show:
+
+> "Your portfolio isn't connected yet."
+
+Not an empty dashboard.
+
+---
+
+## Bad data
+
+Missing tenant IDs.
+
+Show:
+
+> 31 records cannot be reconciled because Tenant ID is missing.
+
+Give:
+
+**Download errors**
+
+---
+
+## Duplicate records
+
+Don't blindly import duplicates.
+
+Flag them.
+
+---
+
+## Conflicting information
+
+Lease says:
+
+₦2m.
+
+Billing says:
+
+₦1.8m.
+
+Don't decide automatically.
+
+Create exception.
+
+---
+
+## Payment can't be matched
+
+Don't force it.
+
+Create:
+
+**Unallocated payment**
+
+with confidence score.
+
+---
+
+## API failure
+
+Never tell the user:
+
+> "Something went wrong."
+
+Tell them:
+
+> "Payment data could not be synchronised. Your last successful sync was 10:42 AM."
+
+Then:
+
+**Retry**
+
+---
+
+## Duplicate API event
+
+Use idempotency keys.
+
+The same payment must not be imported twice.
+
+---
+
+## Partial import
+
+Suppose 10,000 rows are uploaded.
+
+9,842 succeed.
+
+158 fail.
+
+Don't roll back everything.
+
+Show:
+
+> **9,842 imported successfully. 158 require attention.**
+
+---
+
+# 44. WRONG USER INPUT
+
+If user maps:
+
+`Tenant Name → Payment Amount`
+
+the system should catch type inconsistencies.
+
+Example:
+
+> "This field contains mostly names but you've mapped it to a monetary field."
+
+Prevent the import.
+
+---
+
+# 45. FALSE POSITIVES
+
+This is critical.
+
+If AI says:
+
+> "Potential ₦2m leakage"
+
+but it's actually a legitimate concession, the user needs to be able to say:
+
+**False positive.**
+
+The system should record:
+
+```text
+Exception
+↓
+Human decision
+↓
+Reason
+↓
+Outcome
+```
+
+That becomes training/evaluation data.
+
+---
+
+# 46. SECURITY REQUIREMENTS
+
+Even MVP architecture should include:
+
+* encryption in transit
+* encryption at rest
+* secure secrets
+* tenant isolation
+* RBAC
+* audit logs
+* secure file uploads
+* malware scanning
+* rate limiting
+* session security
+* backup strategy
+* data deletion process
+* access logging
+
+Because you're handling:
+
+**financial + tenant + contractual information.**
+
+Security isn't a later feature.
+
+---
+
+# 47. AUDIT LOG
+
+Every important event:
+
+```text
+USER
+ACTION
+TIMESTAMP
+OBJECT
+OLD VALUE
+NEW VALUE
+SOURCE
+```
+
+Example:
+
+> Samuel changed exception status from "Open" to "Resolved" at 14:32.
+
+Enterprise customers will eventually demand this.
+
+---
+
+# 48. THE MVP DATA MODEL
+
+At minimum:
+
+```text
+ORGANISATION
+      │
+      ├── USERS
+      │
+      ├── PROPERTIES
+      │
+      ├── TENANTS
+      │
+      ├── LEASES
+      │      │
+      │      └── OBLIGATIONS
+      │
+      ├── INVOICES
+      │
+      ├── PAYMENTS
+      │
+      ├── RECONCILIATIONS
+      │
+      └── EXCEPTIONS
+               │
+               ├── EVIDENCE
+               ├── ACTIONS
+               └── RESOLUTION
+```
+
+That's enough.
+
+---
+
+# 49. MVP SUCCESS METRICS
+
+Don't measure:
+
+> "Number of signups."
+
+Measure:
+
+### Activation
+
+Percentage of organisations that successfully import enough data to run reconciliation.
+
+### Time to first insight
+
+**Signup → first meaningful discrepancy.**
+
+Target:
+
+**<15 minutes.**
+
+Eventually:
+
+**<5 minutes.**
+
+### Detection quality
+
+How many flagged exceptions are legitimate?
+
+### Financial value identified
+
+Total potential discrepancy identified.
+
+### Resolution rate
+
+Percentage of exceptions resolved.
+
+### Recovery
+
+Actual financial value recovered/confirmed.
+
+### Automation rate
+
+Percentage of reconciliation work performed without manual intervention.
+
+---
+
+# 50. THE MOST IMPORTANT MVP METRIC
+
+I'd make this:
+
+# TIME TO VERIFIED FINANCIAL INSIGHT
+
+From:
+
+**"I just signed up."**
+
+to:
+
+> **"I found something in my portfolio that I didn't know was wrong."**
+
+If that takes two days, the product is weak.
+
+If it takes five minutes, you've got something interesting.
+
+---
+
+# 51. DEFINE "DONE"
+
+This is where we prevent ourselves from endlessly building.
+
+The MVP is **DONE** when:
+
+### Authentication
+
+* [ ] signup works
+* [ ] login works
+* [ ] password reset works
+* [ ] organisation creation works
+* [ ] roles work
+
+### Data
+
+* [ ] CSV upload works
+* [ ] XLSX upload works
+* [ ] column mapping works
+* [ ] validation works
+* [ ] errors are understandable
+* [ ] partial imports work
+* [ ] duplicate handling works
+
+### Core engine
+
+* [ ] leases can be represented
+* [ ] billing can be represented
+* [ ] payments can be represented
+* [ ] expected revenue can be calculated
+* [ ] actual revenue can be calculated
+* [ ] records can be matched
+* [ ] discrepancies can be detected
+* [ ] six core exception types work
+
+### Evidence
+
+* [ ] every exception has supporting records
+* [ ] user can inspect evidence
+* [ ] calculations are reproducible
+* [ ] AI explanations don't invent facts
+
+### Workflow
+
+* [ ] exception can be assigned
+* [ ] exception can be commented on
+* [ ] exception can be dismissed
+* [ ] exception can be resolved
+* [ ] resolution reason can be recorded
+
+### Dashboard
+
+* [ ] total discrepancy visible
+* [ ] exception count visible
+* [ ] categories visible
+* [ ] high-priority items visible
+* [ ] filtering works
+* [ ] search works
+
+### Reliability
+
+* [ ] failed imports recover
+* [ ] API failures don't corrupt data
+* [ ] duplicate transactions don't duplicate records
+* [ ] background jobs can retry
+* [ ] backups work
+* [ ] audit log works
+
+### Security
+
+* [ ] tenant isolation
+* [ ] RBAC
+* [ ] encrypted transport
+* [ ] secure file storage
+* [ ] audit logging
+* [ ] secrets protected
+
+### User outcome
+
+And this is the final test:
+
+> **A real finance/property-management user can go from a raw portfolio dataset to identifying, investigating and resolving a genuine revenue discrepancy without needing the product team to intervene.**
+
+If that doesn't work:
+
+**the MVP isn't finished.**
+
+---
+
+# 52. THE MVP IN ONE SENTENCE
+
+If I had to put the entire specification on one page:
+
+> **Revenue Control is a B2B SaaS platform for property-management finance teams that ingests lease, billing and payment data, automatically reconciles expected versus actual revenue, identifies and explains financial discrepancies, provides evidence, and lets teams assign and resolve exceptions.**
+
+---
+
+# 53. THE PRODUCT LOOP
+
+Everything revolves around this:
+
+```text
+          ┌───────────────┐
+          │     DATA      │
+          └───────┬───────┘
+                  ↓
+          ┌───────────────┐
+          │ RECONCILIATION│
+          └───────┬───────┘
+                  ↓
+          ┌───────────────┐
+          │  EXCEPTION    │
+          │   DETECTION   │
+          └───────┬───────┘
+                  ↓
+          ┌───────────────┐
+          │   EVIDENCE    │
+          └───────┬───────┘
+                  ↓
+          ┌───────────────┐
+          │    ACTION     │
+          └───────┬───────┘
+                  ↓
+          ┌───────────────┐
+          │   RESOLUTION  │
+          └───────┬───────┘
+                  ↓
+          ┌───────────────┐
+          │ VALUE RECOVERED│
+          └───────┬───────┘
+                  │
+                  └──────────────→ MORE DATA
+```
+
+That is the MVP.
+
+**Not a property-management platform. Not an AI chatbot. Not another dashboard.**
+
+It is a **financial control engine for real estate**.
+
+And strategically, this gives us the right foundation: once the system owns the relationship between **contracts → obligations → money → exceptions → actions → outcomes**, we can progressively expand it into the much larger **Real Estate Execution OS** without having to rebuild the underlying data model and workflow architecture. Deloitte's research also suggests that process automation and data readiness are central to CRE's AI transition, which supports attacking the workflow/data-control layer rather than simply adding another generative-AI interface. ([Deloitte United Kingdom][1])
+
+[1]: https://www2.deloitte.com/us/en/insights/industry/financial-services/commercial-real-estate-outlook.html?utm_source=chatgpt.com "2025 commercial real estate outlook | Deloitte Insights"
+[2]: https://www.yardi.com/solution/property-management-software/?utm_source=chatgpt.com "Property Management Software for Real Estate Portfolios"
