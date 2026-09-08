@@ -145,3 +145,37 @@ Decisions Requiring User Approval:
 - Recommend path (A) for the MVP, with a clear documented plan to migrate to (B) for production. Path (A) ships fastest and the engine — the core IP — is already pure TypeScript that works in either environment.
 
 Next Action: Await user's choice on path (A), (B), or (C). On selection, proceed with Slice 0/1 (or skip to Slice 3 if path A is chosen and we use the sandbox's existing Next.js + Prisma setup).
+
+---
+Task ID: repo-setup-1
+Agent: main (Super Z)
+Task: Push the project to GitHub at theExceptionalSam/flatrun per user's instruction. User chose path A (build the rest using the sandbox stack: Next.js 16 + Prisma SQLite + NextAuth; engine — already pure TypeScript — drops in unchanged).
+
+Work Log:
+- User provided GitHub repo URL (https://github.com/theExceptionalSam/flatrun) and a Personal Access Token (PAT) for authentication. WARNED user that the PAT is now in chat history and must be rotated at https://github.com/settings/tokens after the push completes.
+- Restructured repo layout: moved /home/z/my-project/revenue-control/{docs,packages,README.md} to /home/z/my-project/{docs,packages,README.md}. This puts the source-of-truth docs at the repo root, the engine at /packages/reconciliation-engine/, and the Next.js app at the repo root (alongside package.json, prisma/, src/, etc.). Removed the now-empty /home/z/my-project/revenue-control/ directory.
+- Verified engine still produces the correct 5-exception report from the new location (cd /home/z/my-project/packages/reconciliation-engine && bun run cli/reconcile.ts test/fixtures).
+- Updated .gitignore: changed overly-broad 'test' pattern (which was excluding /packages/reconciliation-engine/test/) to '/test/' (root-only). Added /upload/, /download/, /skills/, /examples/, /mini-services/, /db/ as sandbox artifacts to ignore. Added standard env file exclusions.
+- Updated README.md: documented the new repo layout, the slice plan with current status (Slice 2 = DONE), the sandbox stack note (path A), and quick-start commands for both the engine CLI and the Next.js web app.
+- Untracked .env (was committed by sandbox init; only contained a local SQLite path, not a secret, but should not be tracked).
+- Committed with descriptive message: "Restructure: flatten repo layout + commit Slice 2 (reconciliation engine)".
+- Added remote: https://flatrun-bot:<PAT>@github.com/theExceptionalSam/flatrun.git (PAT in URL temporarily).
+- Pushed to GitHub: `main` branch, commit ae0d46d. Push succeeded — new branch 'main' created at origin.
+- Stripped PAT from local remote URL: `git remote set-url origin https://github.com/theExceptionalSam/flatrun.git`. PAT is no longer stored on disk in remote config.
+- Verified: `git ls-remote origin` shows commit ae0d46d at HEAD and refs/heads/main.
+
+Stage Summary:
+- Repo is live at https://github.com/theExceptionalSam/flatrun with the full Slice 2 deliverable (engine + CLI + docs).
+- Local remote URL no longer contains the PAT (security hygiene).
+- Repo structure is clean: docs/, packages/reconciliation-engine/, src/ (Next.js), prisma/, README.md, package.json at the root.
+- Path A confirmed: web app uses sandbox stack (Next.js 16 + Prisma SQLite + NextAuth). The approved production stack (NestJS + Postgres + Redis + S3 + Clerk) remains documented in /docs/architecture.md as the migration target.
+
+Decisions Requiring User Approval:
+- None for this task. User explicitly approved path A and the GitHub push.
+
+Next Actions (to be communicated to user):
+1. ROTATE the GitHub PAT immediately (it's in chat history).
+2. Set up external accounts: Clerk, OpenAI, Sentry, Render, custom domain.
+3. Create production env file template (.env.example with real keys).
+4. Connect Render to the GitHub repo and trigger first deploy of the Next.js app (Slice 0/1 in the new sandbox stack).
+5. Begin Slice 1 (auth + organisation) using NextAuth + Prisma + SQLite in the sandbox, with the engine ready to be wired in for Slice 3+.
