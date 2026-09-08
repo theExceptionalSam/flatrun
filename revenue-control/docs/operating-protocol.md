@@ -223,7 +223,66 @@ These were raised in the technical planning pass and remain open. The plan canno
 
 ## 11. Decision Log
 
-(To be populated as decisions are made.)
+```
+[2026-09-09] Decision: Tech stack confirmed — NestJS + Next.js + PostgreSQL + Redis + S3-compatible storage + Clerk auth.
+  Context: Q1 of the 8 approval questions.
+  Options considered: NestJS+Next.js (brief) / Next.js full-stack only (skill default) / other
+  Choice: NestJS (API) + Next.js (web) monorepo, per the brief.
+  Rationale: Brief is source of truth. Modular monolith with separate API process is the approved architecture.
+  Affects: docs/architecture.md (no change — already reflects this).
+
+[2026-09-09] Decision: Monorepo via pnpm workspaces + turborepo.
+  Context: Q2 of the 8 approval questions.
+  Options considered: Monorepo / separate repos
+  Choice: Monorepo (pnpm workspaces + turbo).
+  Rationale: Shared packages (reconciliation-engine, shared types) consumed by both apps; single CI; atomic commits across apps and packages.
+  Affects: docs/architecture.md (no change — already reflects this).
+
+[2026-09-09] Decision: Auth provider — Clerk (not Auth0).
+  Context: Q3 of the 8 approval questions.
+  Options considered: Clerk / Auth0 / build custom
+  Choice: Clerk.
+  Rationale: Clerk has native Next.js App Router SDK, built-in Organisations feature that maps directly to our `organisations` table, pre-built sign-in/sign-up UI, MFA, and enterprise SSO/SAML as an add-on. Better DX for fast MVP iteration. Decision is reversible — the `auth` module wraps Clerk so we can swap if enterprise needs exceed Clerk.
+  Affects: docs/architecture.md Section 7 (auth), docs/security.md Section 2 (Authentication) — to be updated when auth module is built in Slice 1.
+
+[2026-09-09] Decision: Currency mismatch handled at validation, defer cross-currency reconciliation.
+  Context: Q4 of the 8 approval questions.
+  Options considered: Cross-currency in MVP / flag-and-defer / single-currency only
+  Choice: Flag-and-defer. Lease in USD with invoice in NGN → invalid_record at import. Cross-currency reconciliation is a later phase.
+  Rationale: Multi-currency storage is supported structurally (CHAR(3) ISO 4217 on every money table). Cross-currency *reconciliation* requires FX rates, which adds scope. Defer.
+  Affects: docs/edge-cases.md (no change — already reflects this).
+
+[2026-09-09] Decision: Conflicting leases (overlapping dates for same tenant+property) — system warning in validation_report, NOT a 7th exception type.
+  Context: Q5 of the 8 approval questions.
+  Options considered: (a) 7th exception type / (b) validation error blocking import / (c) system warning
+  Choice: (c) system warning.
+  Rationale: Brief is explicit about exactly six exception types. Adding a 7th requires a brief amendment. Blocking import is too strict (both leases may be legitimate, with one terminating mid-period and not yet updated). Warning lets the user proceed and resolve in mapping.
+  Affects: docs/edge-cases.md (no change — already reflects this).
+
+[2026-09-09] Decision: AI provider — OpenAI default, behind abstraction port.
+  Context: Q6 of the 8 approval questions.
+  Options considered: OpenAI / Anthropic / in-house / multi
+  Choice: OpenAI default, with `LlmClient` interface and `AnthropicLlmClient` + `NoopLlmClient` available.
+  Rationale: OpenAI has the broadest model selection and best-in-class structured output support. Abstraction port means we can swap without refactoring business code. NoopLlmClient ensures the product works without AI.
+  Affects: docs/architecture.md Section 7 (no change — already reflects this).
+
+[2026-09-09] Decision: Deployment — Render for MVP, AWS for production.
+  Context: Q7 of the 8 approval questions.
+  Options considered: Render / Railway / AWS / GCP
+  Choice: Render for MVP (fast setup, managed Postgres + Redis), AWS for production (ECS + RDS + S3 + ElastiCache).
+  Rationale: MVP speed > production optimisation. Render ships in hours. Migration to AWS is a deployment change, not a code change (the architecture is cloud-agnostic).
+  Affects: docs/architecture.md Section 12 (no change — already reflects this).
+
+[2026-09-09] Decision: Scope confirmed — nothing in the "Do Not Build Now" list (brief Section 23) will be built in the MVP.
+  Context: Q8 of the 8 approval questions.
+  Choice: Confirmed.
+  Rationale: User explicitly approved. Scope discipline is the operating protocol.
+  Affects: docs/build-slices.md (no change — already respects this).
+```
+
+---
+
+(Old template retained below for future decisions.)
 
 ```
 [YYYY-MM-DD] Decision: <one-line summary>
