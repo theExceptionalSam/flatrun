@@ -1,0 +1,119 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Cancel in-progress runs on the same ref when a new commit is pushed.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Job 1: Lint + typecheck the Next.js web app
+  # ---------------------------------------------------------------------------
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Lint
+        run: bun run lint
+
+  # ---------------------------------------------------------------------------
+  # Job 2: Run the reconciliation engine on the planted fixtures
+  # ---------------------------------------------------------------------------
+  # This is the "first real milestone" gate from /docs/build-slices.md Slice 2.
+  # If the engine does not produce exactly the 5 planted discrepancies
+  # (Tenant A clean, B underbilling, C missed escalation, D underpayment,
+  #  E unallocated payment, F duplicate invoice), CI fails.
+  engine:
+    name: Reconciliation engine
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3
+
+      - name: Run engine on small fixtures
+        working-directory: packages/reconciliation-engine
+        env:
+          LANG: en_US.UTF-8
+          LC_ALL: en_US.UTF-8
+        run: |
+          bun run cli/reconcile.ts test/fixtures | tee report.txt
+
+      - name: Verify expected exception count (must be 5)
+        working-directory: packages/reconciliation-engine
+        run: |
+          set -euo pipefail
+          # Match the line "  Total: 5" exactly (with surrounding whitespace)
+          if ! grep -Eq "^  Total: 5\s*$" report.txt; then
+            echo "::error::Engine did not produce expected 5 exceptions. See report.txt for actual output."
+            cat report.txt
+            exit 1
+          fi
+          echo "::notice::Engine produced expected 5 exceptions."
+
+      - name: Verify expected total variance (must be ₦1,125,000)
+        working-directory: packages/reconciliation-engine
+        run: |
+          set -euo pipefail
+          if ! grep -Eq "Total variance: ₦1,125,000.00" report.txt; then
+            echo "::error::Engine did not produce expected ₦1,125,000 variance."
+            cat report.txt
+            exit 1
+          fi
+          echo "::notice::Engine produced expected ₦1,125,000 variance."
+
+      - name: Verify each planted exception type was detected
+        working-directory: packages/reconciliation-engine
+        run: |
+          set -euo pipefail
+          fail=0
+          # Each pattern matches the "by type" summary lines.
+          # Format is: "  <Type padded to 28 chars>: <count> case(s) [₦<variance>]"
+          for expected in \
+            "^  Total: 5\s*$" \
+            "Underbilling\s+: +1 case" \
+            "Missing billing\s+: +0 case" \
+            "Underpayment\s+: +1 case" \
+            "Unallocated payments\s+: +1 case" \
+            "Missed escalations\s+: +1 case" \
+            "Duplicate/anomalous billing\s+: +1 case"
+          do
+            if ! grep -Eq "$expected" report.txt; then
+              echo "::error::Missing expected exception: $expected"
+              fail=1
+            fi
+          done
+          if [ $fail -eq 1 ]; then
+            cat report.txt
+            exit 1
+          fi
+          echo "::notice::All six exception types detected as expected."
+
+      - name: Upload engine report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: engine-report
+          path: packages/reconciliation-engine/report.txt
+          retention-days: 7
