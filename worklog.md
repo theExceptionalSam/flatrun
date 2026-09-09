@@ -179,3 +179,74 @@ Next Actions (to be communicated to user):
 3. Create production env file template (.env.example with real keys).
 4. Connect Render to the GitHub repo and trigger first deploy of the Next.js app (Slice 0/1 in the new sandbox stack).
 5. Begin Slice 1 (auth + organisation) using NextAuth + Prisma + SQLite in the sandbox, with the engine ready to be wired in for Slice 3+.
+
+---
+Task ID: repo-polish-1
+Agent: main (Super Z)
+Task: Execute steps 1.2-1.6 from the next-steps guide (LICENSE, .env.example, CI, PR template, CONTRIBUTORS/SECURITY). User requested these before moving to step 2 (external accounts).
+
+Work Log:
+- 1.2 LICENSE: Created a proprietary "all rights reserved" LICENSE file. Note: User had already added a LICENSE via GitHub web UI (commit a7d929d "Add LICENSE file with copyright information") with a shorter version of the same proprietary clause. During rebase, resolved the conflict by keeping the user's version (their decision, simpler and equally valid).
+- 1.3 .env.example + .env: Created .env.example (tracked, documents all env vars: app, database, auth, AI, error tracking, file storage, Clerk-future) and a local .env (gitignored, with a real NEXTAUTH_SECRET generated via openssl rand -base64 32). Fixed .gitignore: the existing .env* pattern was excluding .env.example from being tracked. Added !.env.example negation pattern. Verified .env is ignored and .env.example is untracked (will be added).
+- 1.4 GitHub Actions CI: Created .github/workflows/ci.yml with two jobs:
+   (a) Lint job: runs 'bun run lint' on the Next.js app.
+   (b) Engine job: runs the reconciliation engine on test fixtures and verifies the output matches the planted discrepancies exactly:
+       - Total: 5 exceptions (Tenant A clean; B/C/D/E/F each have 1)
+       - Total variance: ₦1,125,000.00
+       - Each type count correct (Underbilling 1, Missing billing 0, Underpayment 1, Unallocated payments 1, Missed escalations 1, Duplicate/anomalous billing 1)
+   The engine report is uploaded as a CI artifact (7-day retention) for debugging.
+   Set LANG=en_US.UTF-8 to ensure the ₦ character is handled correctly on Ubuntu runners.
+   Validated all grep patterns against the actual engine output locally before committing — all 8 patterns matched.
+- 1.5 PR template: Created .github/PULL_REQUEST_TEMPLATE.md with: summary, slice field (per docs/build-slices.md), acceptance criteria checklist, scope-change disclosure, worklog entry link, and a checklist before requesting review. Includes reviewer note about operating protocol checks (no scope creep, no AI for financial logic).
+- 1.6 CONTRIBUTORS.md + SECURITY.md:
+   - CONTRIBUTORS.md: Lists theExceptionalSam as founder/maintainer. Documents that Flatrun is proprietary and not currently accepting external contributions. Includes format for adding future maintainers.
+   - SECURITY.md: vulnerability reporting process (security@flatrun.io, 48h acknowledgement, 7-day triage), in-scope and out-of-scope items, supported versions table (main only), security architecture summary linking to docs/security.md, and disclosure policy (30-90 day coordinated disclosure).
+
+Cleanup:
+- Untracked db/custom.db (local SQLite file should never be tracked).
+- Untracked .zscripts/, examples/, mini-services/ (sandbox build artifacts).
+- Set git config core.fileMode=false to ignore spurious mode changes from sandbox file operations.
+- Committed as "Repo polish: LICENSE, .env.example, CI, PR template, SECURITY/CONTRIBUTORS" (commit a39e4c0 after rebase and LICENSE conflict resolution).
+
+Stage Summary:
+- All 5 polish tasks (1.2-1.6) complete and pushed to GitHub.
+- Repo is now in a clean state: LICENSE, .env.example (with template), CI workflow (with engine verification gate), PR template, CONTRIBUTORS, SECURITY all in place.
+- CI will trigger on the next push to main and on every PR. The engine job is the gate: if the engine produces anything other than the expected 5 exceptions / ₦1,125,000 variance, CI fails.
+- User's existing LICENSE (added via GitHub web UI) preserved during rebase.
+
+What Was Built:
+- LICENSE (kept user's version after rebase conflict)
+- .env.example (tracked template)
+- .env (gitignored, with real local NEXTAUTH_SECRET)
+- .github/workflows/ci.yml (two-job CI: lint + engine verification)
+- .github/PULL_REQUEST_TEMPLATE.md
+- CONTRIBUTORS.md
+- SECURITY.md
+- .gitignore updates (negation pattern for .env.example, sandbox artifact exclusions)
+
+What Was Tested:
+- Validated all CI grep patterns against actual engine output (8 patterns, all PASS).
+- Verified .env is gitignored and .env.example is NOT ignored.
+- Verified rebase preserved user's LICENSE commit (a7d929d) and my commit (a39e4c0) is on top.
+- Verified push succeeded (a7d929d..a39e4c0 main -> main).
+
+What Passed:
+- Push to GitHub succeeded.
+- Engine still produces correct 5-exception report (CI will verify this on every push).
+- All polish files are in place on GitHub.
+
+What Failed:
+- Initial CI grep patterns did not match actual engine output format. Fixed patterns to match "  Total: 5" (with whitespace) and "Total variance: ₦1,125,000.00" exactly.
+- Initial push was rejected because user had added a LICENSE via GitHub web UI in parallel. Resolved by rebasing onto FETCH_HEAD, resolving the LICENSE add/add conflict (kept user's version), and pushing again.
+
+What Remains:
+- Verify CI runs green on GitHub (user can check https://github.com/theExceptionalSam/flatrun/actions after GitHub processes the workflow).
+- Step 0.1: User MUST rotate the GitHub PAT (still in chat history from previous turn).
+- Step 0.2: User should configure git credential storage locally so future pushes don't need inline PAT.
+- Step 0.3: User should add branch protection on main (after first green CI run, so the rule has a status check to require).
+- Step 2: External accounts (Clerk, OpenAI, Sentry, Render) — user said do this after step 1.
+
+Decisions Requiring User Approval:
+- None. All work was within the explicitly approved step 1.2-1.6 scope.
+
+Next Action: User verifies CI is green on GitHub Actions, then we proceed to Step 2 (external accounts) when they're ready.
