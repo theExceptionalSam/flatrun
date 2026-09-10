@@ -25,10 +25,10 @@ import type {
   NormalisedLease,
   Severity,
   UUID,
-} from '../types.js';
-import { compareKobo, sumKobo, tolerance } from '../decimal.js';
-import { daysBetween } from '../period.js';
-import { explainUnderpayment } from '../templates.js';
+} from '../types';
+import { compareKobo, sumKobo, tolerance } from '../decimal';
+import { daysBetween } from '../period';
+import { explainUnderpayment } from '../templates';
 
 export function detectUnderpayment(
   invoices: NormalisedInvoice[],

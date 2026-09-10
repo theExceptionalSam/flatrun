@@ -10,7 +10,7 @@
  * Source of truth: /docs/reconciliation-rules.md Section 2 (Billing period, Lease active)
  */
 
-import type { LeaseFrequency } from './types.js';
+import type { LeaseFrequency } from './types';
 
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
 

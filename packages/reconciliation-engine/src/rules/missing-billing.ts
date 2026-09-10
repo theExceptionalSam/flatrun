@@ -31,10 +31,10 @@ import type {
   NormalisedInvoice,
   NormalisedLease,
   Severity,
-} from '../types.js';
-import { daysBetween, periodContaining, isLeaseActiveForPeriod } from '../period.js';
-import { expectedRentForPeriod } from '../escalation.js';
-import { explainMissingBilling } from '../templates.js';
+} from '../types';
+import { daysBetween, periodContaining, isLeaseActiveForPeriod } from '../period';
+import { expectedRentForPeriod } from '../escalation';
+import { explainMissingBilling } from '../templates';
 
 export function detectMissingBilling(
   lease: NormalisedLease,

@@ -27,15 +27,15 @@ import type {
   NormalisedProperty,
   NormalisedTenant,
   UUID,
-} from './types.js';
-import { buildMatchingContext } from './matching.js';
-import { detectDuplicateAnomalousBilling } from './rules/duplicate-anomalous-billing.js';
-import { detectMissingBilling } from './rules/missing-billing.js';
-import { detectMissedEscalation } from './rules/missed-escalation.js';
-import { detectUnderbilling } from './rules/underbilling.js';
-import { detectUnderpayment } from './rules/underpayment.js';
-import { detectUnallocatedPayments } from './rules/unallocated-payment.js';
-import { sumKobo } from './decimal.js';
+} from './types';
+import { buildMatchingContext } from './matching';
+import { detectDuplicateAnomalousBilling } from './rules/duplicate-anomalous-billing';
+import { detectMissingBilling } from './rules/missing-billing';
+import { detectMissedEscalation } from './rules/missed-escalation';
+import { detectUnderbilling } from './rules/underbilling';
+import { detectUnderpayment } from './rules/underpayment';
+import { detectUnallocatedPayments } from './rules/unallocated-payment';
+import { sumKobo } from './decimal';
 
 export interface EngineInput {
   properties: NormalisedProperty[];

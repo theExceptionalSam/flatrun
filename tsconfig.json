@@ -26,6 +26,12 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@revenue-control/reconciliation-engine": [
+        "./packages/reconciliation-engine/src/index.ts"
+      ],
+      "@revenue-control/reconciliation-engine/*": [
+        "./packages/reconciliation-engine/src/*"
       ]
     }
   },

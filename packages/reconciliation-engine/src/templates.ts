@@ -21,8 +21,8 @@ import type {
   NormalisedInvoice,
   NormalisedLease,
   NormalisedPayment,
-} from './types.js';
-import { formatNaira } from './decimal.js';
+} from './types';
+import { formatNaira } from './decimal';
 
 interface TemplateContext {
   lease: NormalisedLease;

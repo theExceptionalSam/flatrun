@@ -28,12 +28,12 @@ import type {
   NormalisedInvoice,
   NormalisedLease,
   Severity,
-} from '../types.js';
-import { compareKobo, sumKobo, tolerance } from '../decimal.js';
-import { periodContaining } from '../period.js';
-import { expectedRentForPeriod } from '../escalation.js';
-import { explainMissedEscalation } from '../templates.js';
-import { groupInvoicesByPeriod } from './underbilling.js';
+} from '../types';
+import { compareKobo, sumKobo, tolerance } from '../decimal';
+import { periodContaining } from '../period';
+import { expectedRentForPeriod } from '../escalation';
+import { explainMissedEscalation } from '../templates';
+import { groupInvoicesByPeriod } from './underbilling';
 
 /**
  * Returns the set of period start dates where Rule 5 fired, so Rule 1 can be

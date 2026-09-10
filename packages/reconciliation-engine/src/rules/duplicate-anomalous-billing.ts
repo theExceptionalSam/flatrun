@@ -33,12 +33,12 @@ import type {
   NormalisedLease,
   Severity,
   UUID,
-} from '../types.js';
-import { expectedRentForPeriod } from '../escalation.js';
-import { periodContaining } from '../period.js';
-import { compareKobo, tolerance } from '../decimal.js';
-import { daysBetween } from '../period.js';
-import { explainDuplicateInvoice } from '../templates.js';
+} from '../types';
+import { expectedRentForPeriod } from '../escalation';
+import { periodContaining } from '../period';
+import { compareKobo, tolerance } from '../decimal';
+import { daysBetween } from '../period';
+import { explainDuplicateInvoice } from '../templates';
 
 interface InvoicePeriodInfo {
   invoice: NormalisedInvoice;

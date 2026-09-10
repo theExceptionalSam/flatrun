@@ -28,11 +28,11 @@ import type {
   NormalisedInvoice,
   NormalisedLease,
   Severity,
-} from '../types.js';
-import { compareKobo, sumKobo, tolerance } from '../decimal.js';
-import { periodContaining } from '../period.js';
-import { expectedRentForPeriod } from '../escalation.js';
-import { explainUnderbilling } from '../templates.js';
+} from '../types';
+import { compareKobo, sumKobo, tolerance } from '../decimal';
+import { periodContaining } from '../period';
+import { expectedRentForPeriod } from '../escalation';
+import { explainUnderbilling } from '../templates';
 
 interface PeriodInvoices {
   periodStart: string;

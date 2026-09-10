@@ -8,8 +8,8 @@
  * normalises them, calls runReconciliation(), and persists the results.
  */
 
-export { runReconciliation } from './engine.js';
-export type { EngineInput, EngineResult } from './engine.js';
+export { runReconciliation } from './engine';
+export type { EngineInput, EngineResult } from './engine';
 
 export type {
   Kobo,
@@ -33,7 +33,7 @@ export type {
   EngineConfig,
   MatchingContext,
   UnallocatedReason,
-} from './types.js';
+} from './types';
 
 export {
   nairaToKobo,
@@ -42,7 +42,7 @@ export {
   tolerance,
   compareKobo,
   sumKobo,
-} from './decimal.js';
+} from './decimal';
 
 export {
   parseDate,
@@ -55,11 +55,11 @@ export {
   periodLengthMonths,
   periodContains,
   lastDayOfMonth,
-} from './period.js';
-export type { Period } from './period.js';
+} from './period';
+export type { Period } from './period';
 
 export {
   expectedRentForDate,
   expectedRentForPeriod,
   escalationSteps,
-} from './escalation.js';
+} from './escalation';

@@ -16,8 +16,8 @@
  * Source of truth: /docs/reconciliation-rules.md Section 2 (Escalation math)
  */
 
-import type { Kobo, LeaseFrequency, NormalisedLease } from './types.js';
-import { parseDate } from './period.js';
+import type { Kobo, LeaseFrequency, NormalisedLease } from './types';
+import { parseDate } from './period';
 
 /**
  * Calculate the number of escalation steps that have elapsed as of a given date.

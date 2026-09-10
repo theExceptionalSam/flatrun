@@ -32,9 +32,9 @@ import type {
   NormalisedPayment,
   UnallocatedReason,
   UUID,
-} from './types.js';
-import { compareKobo, tolerance } from './decimal.js';
-import { daysBetween } from './period.js';
+} from './types';
+import { compareKobo, tolerance } from './decimal';
+import { daysBetween } from './period';
 
 const DATE_PROXIMITY_DAYS = 60;
 

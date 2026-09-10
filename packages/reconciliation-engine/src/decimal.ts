@@ -10,7 +10,7 @@
  * Source of truth: /docs/reconciliation-rules.md Section 2 (Tolerance)
  */
 
-import type { Kobo } from './types.js';
+import type { Kobo } from './types';
 
 /**
  * Convert a Naira amount (possibly decimal) to integer kobo.

@@ -39,8 +39,8 @@ import type {
   Severity,
   UnallocatedReason,
   UUID,
-} from '../types.js';
-import { explainUnallocatedPayment } from '../templates.js';
+} from '../types';
+import { explainUnallocatedPayment } from '../templates';
 
 export function detectUnallocatedPayments(
   matching: MatchingContext,
