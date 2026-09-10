@@ -250,3 +250,82 @@ Decisions Requiring User Approval:
 - None. All work was within the explicitly approved step 1.2-1.6 scope.
 
 Next Action: User verifies CI is green on GitHub Actions, then we proceed to Step 2 (external accounts) when they're ready.
+
+---
+Task ID: preview-1
+Agent: main (Super Z)
+Task: User asked "let me see what it looks like before deploying". Built a static preview dashboard at / that runs the actual reconciliation engine on the test fixtures and renders the result visually.
+
+Work Log:
+- Built src/lib/preview-data.ts: server-side helper that loads the 5 fixture CSVs, normalises them, runs the reconciliation engine, and returns the result + fixture counts.
+- Built src/app/page.tsx: full dashboard UI using shadcn/ui components:
+  - Header with Flatrun logo, "Reconciled as of" date, "Preview · Fixtures" badge.
+  - Hero summary: total variance in large type, exception counts and data volume.
+  - 4 stat cards: Expected revenue (monthly), Billed, Collected, Total variance (red).
+  - 4 severity cards: Critical, High, Medium, Low counts.
+  - Tabs component with two views: "All exceptions" (sorted table) and "By type" (cards per exception type).
+  - Per-exception cards with deterministic explanation, severity badge, tenant/lease, variance, confidence, and evidence source-record references.
+  - Amber callout at the bottom explicitly noting this is a static preview using planted fixtures, with a forward-reference to which slice replaces each part.
+- Updated src/app/layout.tsx metadata: title, description, OG, Twitter card — all Flatrun-branded.
+- Resolved Next.js 16 + Turbopack import issue for the engine package:
+  - First attempt: relative import path. Rejected by Turbopack (packages outside src/ not in scope).
+  - Second attempt: transpilePackages + experimental.externalDir + turbopack.resolveAlias. Caused dev server to crash with "webpack config without turbopack config" error (stale state from earlier attempt).
+  - Third attempt (worked): symlink src/lib/engine -> packages/reconciliation-engine/src/. Turbopack sees the engine as a local module inside src/. Clean and simple.
+- Stripped .js extensions from all internal imports in packages/reconciliation-engine/src/*.ts. NodeNext-style .js extensions are not understood by Turbopack. Engine still works identically under Bun (CLI verified to produce 5 exceptions / ₦1,125,000 variance after the change).
+- Verified the page renders correctly via agent-browser:
+  - HTTP 200, no console errors, no page errors.
+  - Hero shows "Potential discrepancies detected: ₦1,125,000.00" and "5 exceptions across 6 tenants · 6 properties · 6 leases · 37 invoices · 38 payments reviewed".
+  - Stat cards show correct values (Expected ₦3,000,000; Billed ₦18,450,000; Collected ₦18,900,000; Total variance ₦1,125,000).
+  - Severity cards: 1 critical, 1 high, 3 medium, 0 low.
+  - Table sorts correctly (critical first, then by variance).
+  - "By type" tab works (clickable, shows cards per exception type).
+  - Per-exception cards render the deterministic explanations verbatim from the engine.
+  - Responsive: took screenshots at 1440x900 (desktop) and 375x667 (mobile).
+- Screenshots saved to /home/z/my-project/download/:
+  - flatrun-preview.png (full page, default viewport)
+  - flatrun-preview-desktop.png (1440x900)
+  - flatrun-preview-mobile.png (375x667)
+- Committed as "Engine preview dashboard: visualise reconciliation output before Slice 1" (commit 0a6effc). Pushed to GitHub main.
+
+Stage Summary:
+- The user can now see the product visually before any deploy. The dashboard at / shows the actual engine output (not mock data), with all 5 planted exceptions rendered correctly.
+- This is a PREVIEW only — it is NOT Slice 4. It uses fixture data, has no auth, has no persistence. Slice 1 will add auth + org; Slice 3 will add upload; Slice 4 will replace this with the live dashboard backed by real imported data.
+- The engine package is now imported into the Next.js app via a symlink (cleanest path with Turbopack). Engine internal imports have been cleaned of .js extensions for Turbopack compatibility. Engine functionality is unchanged (CLI still produces 5 exceptions / ₦1,125,000 variance).
+- All changes pushed to GitHub at commit 0a6effc.
+
+What Was Built:
+- src/lib/preview-data.ts (server-side engine runner)
+- src/lib/engine (symlink to packages/reconciliation-engine/src)
+- src/app/page.tsx (full dashboard with stat cards, severity cards, tabs, table, exception detail cards)
+- src/app/layout.tsx (updated metadata)
+- next.config.ts, tsconfig.json, package.json (configuration for engine import)
+- packages/reconciliation-engine/src/*.ts (stripped .js extensions from imports)
+
+What Was Tested:
+- bun run lint — passes clean.
+- bun run packages/reconciliation-engine/cli/reconcile.ts test/fixtures — produces correct 5-exception report.
+- agent-browser open http://localhost:3000 — page loads, HTTP 200, no errors.
+- agent-browser snapshot — verified all sections rendered with correct values.
+- agent-browser click on "By type" tab — tab switches correctly.
+- agent-browser screenshot at desktop and mobile viewports — responsive layout confirmed.
+
+What Passed:
+- Engine output matches planted discrepancies exactly (5 exceptions, ₦1,125,000 variance).
+- Dashboard renders all sections with correct data.
+- No runtime errors, no console errors.
+- Tabs are interactive.
+- Layout is responsive.
+
+What Failed:
+- Initial attempts to import the engine package via Turbopack config (transpilePackages, externalDir, resolveAlias) caused dev server crashes. Fixed by using a symlink instead.
+- Initial engine imports used NodeNext-style .js extensions which Turbopack doesn't support. Fixed by stripping .js from all internal imports.
+
+What Remains:
+- Slice 1 (auth + organisation + dashboard empty state) — not started. User must complete Sentry + Render setup first.
+- Slice 3 (CSV upload) — not started.
+- Slice 4 (live dashboard backed by real data) — not started. This preview will be replaced by Slice 4.
+
+Decisions Requiring User Approval:
+- The symlink approach (src/lib/engine -> packages/reconciliation-engine/src) is a pragmatic workaround for Turbopack's package resolution limits. In production, we'd either publish the engine as a real npm package or use a proper workspace setup. For the MVP, the symlink is fine. Document for future migration.
+
+Next Action: User reviews the preview at the deployed URL or via the screenshots, then proceeds with Sentry + Render setup (Step 2), then says "ready for Slice 1".
